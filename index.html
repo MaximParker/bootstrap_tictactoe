@@ -25,7 +25,12 @@
 </head>
 
 <body>
-  <div id="board"></div>
+  <div>
+    <div id="board"></div>
+
+    <p id="spaces-remaining">Spaces remaining: 9</p>
+  </div>
+  
 
   <script>
     let boardData = { '1x3': null, '2x3': null, '3x3': null, '1x2': null, '2x2': null, '3x2': null, '1x1': null, '2x1': null, '3x1': null }
@@ -59,6 +64,9 @@
         // Sequence turns
         turnsTaken++;
         playerTurn.push(playerTurn.shift());
+
+        // Update info displays
+        document.getElementById("spaces-remaining").innerText = `Spaces remaining: ${9-turnsTaken}`;
       })
     })
   </script>
