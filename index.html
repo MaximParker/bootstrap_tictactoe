@@ -42,6 +42,10 @@
       if (turnsTaken >= 3) {
         console.log("Checking...")
       }
+
+      if (turnsTaken == 9) {
+        console.log("Stalemate detected!")
+      }
       return null;
     }
 
@@ -58,17 +62,17 @@
         // Update boardData with the current move
         boardData[this] = playerTurn[0];
 
+        // Update info displays
+        turnsTaken++;
+        document.getElementById("info-spaces-remaining").innerText = `Spaces remaining: ${9-turnsTaken}`;
+
         if (checkWinner()) {
           console.log("Winner!")
         } else {
           // Sequence turns
-          turnsTaken++;
           playerTurn.push(playerTurn.shift());
+          document.getElementById("info-current-turn").innerText = `${playerTurn[0]} to play`;
         }
-
-        // Update info displays
-        document.getElementById("info-spaces-remaining").innerText = `Spaces remaining: ${9-turnsTaken}`;
-        document.getElementById("info-current-turn").innerText = `${playerTurn[0]} to play`;
       })
     })
   </script>
