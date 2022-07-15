@@ -28,7 +28,8 @@
   <div>
     <div id="board"></div>
 
-    <p id="spaces-remaining">Spaces remaining: 9</p>
+    <p id="info-current-turn">⭕ to play</p>
+    <p id="info-spaces-remaining">Spaces remaining: 9</p>
   </div>
   
 
@@ -59,14 +60,15 @@
 
         if (checkWinner()) {
           console.log("Winner!")
+        } else {
+          // Sequence turns
+          turnsTaken++;
+          playerTurn.push(playerTurn.shift());
         }
 
-        // Sequence turns
-        turnsTaken++;
-        playerTurn.push(playerTurn.shift());
-
         // Update info displays
-        document.getElementById("spaces-remaining").innerText = `Spaces remaining: ${9-turnsTaken}`;
+        document.getElementById("info-spaces-remaining").innerText = `Spaces remaining: ${9-turnsTaken}`;
+        document.getElementById("info-current-turn").innerText = `${playerTurn[0]} to play`;
       })
     })
   </script>
