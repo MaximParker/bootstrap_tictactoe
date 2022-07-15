@@ -31,21 +31,20 @@
     <p id="info-current-turn">⭕ to play</p>
     <p id="info-spaces-remaining">Spaces remaining: 9</p>
   </div>
-  
+
 
   <script>
-    let boardData = { '1x3': null, '2x3': null, '3x3': null, '1x2': null, '2x2': null, '3x2': null, '1x1': null, '2x1': null, '3x1': null }
-    let playerTurn = ["⭕", "❌"]
+    let boardData = { '1x3': undefined, '2x3': undefined, '3x3': undefined, '1x2': undefined, '2x2': undefined, '3x2': undefined, '1x1': undefined, '2x1': undefined, '3x1': undefined }
+    let playerTurn = ["O", "X"]
     let turnsTaken = 0;
 
     function checkWinner(data) {
-      if (turnsTaken >= 3) {
-        console.log("Checking...")
+      console.log('Checking...', boardData)
+      //if (turnsTaken >= 3) {
+      if (boardData['1x3'] == boardData['2x3'] == boardData['3x3']) {
+        return true;
       }
-
-      if (turnsTaken == 9) {
-        console.log("Stalemate detected!")
-      }
+      //}
       return null;
     }
 
@@ -60,19 +59,27 @@
         document.getElementById(e.composedPath()[0].id).setAttribute("disabled", "disabled")
 
         // Update boardData with the current move
-        boardData[this] = playerTurn[0];
+        boardData[e.composedPath()[0].id.replace('space-', '')] = playerTurn[0];
 
         // Update info displays
         turnsTaken++;
-        document.getElementById("info-spaces-remaining").innerText = `Spaces remaining: ${9-turnsTaken}`;
+        document.getElementById("info-spaces-remaining").innerText = `Spaces remaining: ${9 - turnsTaken}`;
 
         if (checkWinner()) {
           console.log("Winner!")
         } else {
           // Sequence turns
           playerTurn.push(playerTurn.shift());
-          document.getElementById("info-current-turn").innerText = `${playerTurn[0]} to play`;
+
+          if (turnsTaken == 9) {
+            document.getElementById("info-current-turn").innerText = `Stalemate!`;
+          } else {
+            document.getElementById("info-current-turn").innerText = `${playerTurn[0]} to play`;
+          }
+
         }
+
+
       })
     })
   </script>
