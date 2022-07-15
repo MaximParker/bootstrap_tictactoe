@@ -9,6 +9,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
+    #board {
+      display: block;
+      max-width: 310px;
+      margin: 20%;
+    }
+
+    button {
+      width: 80px;
+      height: 80px;
+      margin: 2px;
+    }
   </style>
 </head>
 
@@ -16,26 +27,40 @@
   <div id="board"></div>
 
   <script>
-    let boardData = {'1x3': null, '2x3': null, '3x3': null}
-    let playerTurn = ["O", "X"]
+    let boardData = { '1x3': null, '2x3': null, '3x3': null, '1x2': null, '2x2': null, '3x2': null, '1x1': null, '2x1': null, '3x1': null }
+    let playerTurn = ["⭕", "❌"]
+    let turnsTaken = 0;
+
+    function checkWinner(data) {
+      if (turnsTaken >= 3) {
+
+      }
+      return null;
+    }
 
     // Render the board with listeners on each
     $.each(Object.keys(boardData), function () {
-        let button = `<button id="space-${this}" class="btn btn-primary">_</button>&nbsp;`;
-        $("#board").append(button);
+      let button = `<button id="space-${this}" class="btn"></button>`;
+      $("#board").append(button);
 
-        document.getElementById(`space-${this}`).addEventListener("click", function (e) {
-          // Update the target button element
-          document.getElementById(e.composedPath()[0].id).innerText = playerTurn[0];
+      document.getElementById(`space-${this}`).addEventListener("click", function (e) {
+        // Update the target button element
+        document.getElementById(e.composedPath()[0].id).innerText = playerTurn[0];
 
-          // Update boardData with the current move
-          boardData[this] = playerTurn[0];
+        // Update boardData with the current move
+        boardData[this] = playerTurn[0];
 
-          // Sequence turns
-          playerTurn.push(playerTurn.shift());
-        })
+        if (checkWinner()) {
+          console.log("Winner!")
+        }
+
+        // Sequence turns
+        turnsTaken++;
+        playerTurn.push(playerTurn.shift());
+      })
     })
   </script>
 
 </body>
+
 </html>
