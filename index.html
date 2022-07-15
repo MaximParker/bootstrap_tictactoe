@@ -34,18 +34,33 @@
 
 
   <script>
-    let boardData = { '1x3': undefined, '2x3': undefined, '3x3': undefined, '1x2': undefined, '2x2': undefined, '3x2': undefined, '1x1': undefined, '2x1': undefined, '3x1': undefined }
+    let boardData = { '1x3': 0, '2x3': 0, '3x3': 0, '1x2': 0, '2x2': 0, '3x2': 0, '1x1': 0, '2x1': 0, '3x1': 0 }
     let playerTurn = ["O", "X"]
     let turnsTaken = 0;
 
-    function checkWinner(data) {
-      console.log('Checking...', boardData)
-      //if (turnsTaken >= 3) {
-      if (boardData['1x3'] == boardData['2x3'] == boardData['3x3']) {
-        return true;
-      }
-      //}
-      return null;
+    function checkWinner() {
+      let winningConditions = [
+        [boardData['1x3'], boardData['2x3'], boardData['3x3']],
+        [boardData['1x2'], boardData['2x2'], boardData['3x2']],
+        [boardData['1x1'], boardData['2x1'], boardData['3x1']],
+        [boardData['1x1'], boardData['1x2'], boardData['1x3']],
+        [boardData['2x1'], boardData['2x2'], boardData['2x3']],
+        [boardData['3x1'], boardData['3x2'], boardData['3x3']],
+        [boardData['1x3'], boardData['2x2'], boardData['3x1']],
+        [boardData['1x1'], boardData['2x2'], boardData['3x3']]
+      ]
+
+      winningConditions.forEach((arr) => {
+        switch (arr.reduce((partialSum, a) => partialSum + a, 0)) {
+          case 3:
+            console.log("0 wins!");
+            break;
+          case -3:
+            console.log("X wins!");
+            break;
+        }
+      })
+      return false;
     }
 
     // Render the board with listeners on each
@@ -59,7 +74,12 @@
         document.getElementById(e.composedPath()[0].id).setAttribute("disabled", "disabled")
 
         // Update boardData with the current move
-        boardData[e.composedPath()[0].id.replace('space-', '')] = playerTurn[0];
+        if (playerTurn[0] == 'O') {
+          boardData[e.composedPath()[0].id.replace('space-', '')] = 1;
+        } else {
+          boardData[e.composedPath()[0].id.replace('space-', '')] = -1;
+        }
+
 
         // Update info displays
         turnsTaken++;
