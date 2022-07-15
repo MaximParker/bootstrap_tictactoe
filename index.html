@@ -13,24 +13,29 @@
 </head>
 
 <body>
-
-  <button id="Test"></button>
+  <div id="board"></div>
 
   <script>
-    let boardData = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    let boardData = {'1x3': null, '2x3': null, '3x3': null}
+    let playerTurn = ["O", "X"]
 
-    let num = 0;
+    // Render the board with listeners on each
+    $.each(Object.keys(boardData), function () {
+        let button = `<button id="space-${this}" class="btn btn-primary">_</button>&nbsp;`;
+        $("#board").append(button);
 
+        document.getElementById(`space-${this}`).addEventListener("click", function (e) {
+          // Update the target button element
+          document.getElementById(e.composedPath()[0].id).innerText = playerTurn[0];
 
-    document.getElementById("Test").innerHTML = `${num}`;
-    document.getElementById("Test").addEventListener("click", function (e) {
-      num++;
-      document.getElementById("Test").innerHTML = `${num}`;
+          // Update boardData with the current move
+          boardData[this] = playerTurn[0];
+
+          // Sequence turns
+          playerTurn.push(playerTurn.shift());
+        })
     })
-
   </script>
 
 </body>
-
-
 </html>
