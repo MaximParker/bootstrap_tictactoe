@@ -34,7 +34,7 @@
 
     function checkWinner(data) {
       if (turnsTaken >= 3) {
-
+        console.log("Checking...")
       }
       return null;
     }
@@ -47,6 +47,7 @@
       document.getElementById(`space-${this}`).addEventListener("click", function (e) {
         // Update the target button element
         document.getElementById(e.composedPath()[0].id).innerText = playerTurn[0];
+        document.getElementById(e.composedPath()[0].id).setAttribute("disabled", "disabled")
 
         // Update boardData with the current move
         boardData[this] = playerTurn[0];
