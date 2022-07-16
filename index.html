@@ -53,11 +53,11 @@
       winningConditions.forEach((arr) => {
         switch (arr.reduce((partialSum, a) => partialSum + a, 0)) {
           case 3:
-            console.log("0 wins!");
-            break;
+            console.log("O wins!");
+            return "O"
           case -3:
             console.log("X wins!");
-            break;
+            return "X"
         }
       })
       return false;
